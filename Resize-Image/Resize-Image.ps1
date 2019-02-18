@@ -24,8 +24,9 @@ function Resize-Image
 
     .\nuget.exe install ImageProcessor | Out-Null
 
-    Add-Type -path './ImageProcessor.2.7.0.100/lib/net452/ImageProcessor.dll' | Out-Null
-    
+    $bytes = [System.IO.File]::ReadAllBytes('./ImageProcessor.2.7.0.100/lib/net452/ImageProcessor.dll')
+    [System.Reflection.Assembly]::Load($bytes) | Out-Null
+
     cd $Path
 
     $files = Get-ChildItem
@@ -52,6 +53,8 @@ function Resize-Image
         }
         
     }
+
+    $imageFactory.Dispose()
 
     } catch {
         Write-Host -ForegroundColor Red $_.Exception.Message
