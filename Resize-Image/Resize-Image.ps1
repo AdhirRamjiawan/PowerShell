@@ -12,7 +12,10 @@ function Resize-Image
         [int]$Height,
 
         [Parameter(Mandatory =$true)]
-        [string]$Format)
+        [string]$Format,
+        
+        [Parameter(Mandatory = $false)]
+        [string]$Filter)
 
     Write-Host -ForegroundColor Green "IMG Shrink v1.0.0 - Resize-Image"
 
@@ -24,7 +27,11 @@ function Resize-Image
 
     .\nuget.exe install ImageProcessor | Out-Null
 
-    $bytes = [System.IO.File]::ReadAllBytes('./ImageProcessor.2.7.0.100/lib/net452/ImageProcessor.dll')
+    $assemblyPath = "$env:userprofile\.nuget\packages\ImageProcessor\2.7.0.100\lib\net452\ImageProcessor.dll"
+
+
+    write-host $assemblyPath
+    $bytes = [System.IO.File]::ReadAllBytes($assemblyPath)
     [System.Reflection.Assembly]::Load($bytes) | Out-Null
 
     cd $Path
@@ -43,7 +50,7 @@ function Resize-Image
     $size= New-Object System.Drawing.Size $Width, $Height
 
     foreach ($file in $files) {
-        if ($file.Name -like "*.$Format") {
+        if ($file.Name -like "*.$Format" -and $file.Name -like "*$Filter*") {
             $fname = $file.Name
             write-host "Resizing $fname ..." 
           
