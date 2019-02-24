@@ -19,7 +19,7 @@ $htmlContent =
         <title>$Name</title>
     </head>
     <body>
-        <script type=\"text/javascript\" src=\"js/app.js\"></script>
+        <script type="text/javascript" src="js/app.js"></script>
     </body>
 </html>
 "@;
