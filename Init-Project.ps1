@@ -27,6 +27,8 @@ $htmlContent =
 mkdir $Name
 cd $Name
 
+git init
+
 if ($Type.ToLower() -eq "html5") {
     mkdir js
     mkdir img
